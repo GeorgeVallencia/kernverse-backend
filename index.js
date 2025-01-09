@@ -430,5 +430,9 @@ app.get('/claps/user', verifyToken, async (req, res) => {
 //   }
 // });
 
+module.exports = (req, res) => {
+  res.status(200).json({ message: "Hello, Vercel!" });
+};
+
 
 app.listen(4000);
