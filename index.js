@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const fs = require('fs');
+const path = require('path');
 const Blog = require('./models/Blogs');
 const CommentsModel = require('./models/Comments');
 const Clap = require('./models/Clap');
@@ -30,6 +31,11 @@ const storeItems = new Map([
 const uploadMiddleware = multer({ dest: 'uploads/' });
 const secret = process.env.JWT_SECRET
 const salt = bcrypt.genSaltSync(10);
+
+const uploadsPath = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsPath)) {
+  fs.mkdirSync(uploadsPath);
+}
 
 
 const app = express(); 
