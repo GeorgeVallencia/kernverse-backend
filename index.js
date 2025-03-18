@@ -61,6 +61,8 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'))
+app.use(express.static(path.join(__dirname, 'build')));
+
 app.use((req, res, next) => {
   const origin = req.get('Origin');
   if (allowedOrigins.includes(origin)) {
@@ -440,6 +442,10 @@ app.get('/claps/user', verifyToken, async (req, res) => {
     console.error('Error fetching user claps:', err);
     res.status(500).json({ error: 'Failed to fetch user claps' });
   }
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // Increment commentCount for a blog
