@@ -61,7 +61,7 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'))
-//app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.use((req, res, next) => {
   const origin = req.get('Origin');
@@ -468,9 +468,9 @@ app.get('/claps/user', verifyToken, async (req, res) => {
 //   }
 // });
 
-module.exports = (req, res) => {
-  res.status(200).send("Hello from Vercel!");
-};
+// module.exports = (req, res) => {
+//   res.status(200).send("Hello from Vercel!");
+// };
 
 
 module.exports = app;
