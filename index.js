@@ -38,12 +38,38 @@ if (!fs.existsSync(uploadsPath)) {
 }
 
 
-const app = express(); 
+const app = express();
 
-app.use(cors({ credentials: true, origin: `${process.env.SERVER_URL}` }));
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://splendid-dodol-d7eafa.netlify.app'
+];
+
+//app.use(cors({ credentials: true, origin: `${process.env.SERVER_URL}` }));
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'))
+app.use((req, res, next) => {
+  const origin = req.get('Origin');
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  }
+  next();
+});
+
 
 app.post('/register', async (req, res) => {
   try {
@@ -443,6 +469,6 @@ module.exports = (req, res) => {
 
 module.exports = app;
 
-// const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4000;
 
-// app.listen(port);
+app.listen(port);
