@@ -61,7 +61,7 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'))
-app.use(express.static(path.join(__dirname, 'build')));
+//app.use(express.static(path.join(__dirname, 'build')));
 
 app.use((req, res, next) => {
   const origin = req.get('Origin');
@@ -444,9 +444,9 @@ app.get('/claps/user', verifyToken, async (req, res) => {
   }
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 // Increment commentCount for a blog
 // app.put('/comments/:id/commentCount', async (req, res) => {
