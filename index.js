@@ -160,7 +160,7 @@ app.get('/profile', (req, res) => {
 //   res.cookie('token', '').json('ok');
 // });
 
-app.post('/published-postss', uploadMiddleware.single('file'),  async(req, res) => {
+app.post('/published-posts', uploadMiddleware.single('file'),  async(req, res) => {
   const { originalname, path } = req.file;
   const parts = originalname.split('.');
   const ext = parts[parts.length - 1]
